@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>growfolio.info</title>
+  <link href="./output.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+  <script async src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"></script>
+  <script>
+    (function () {
+      window.googletag = window.googletag || { cmd: [] };
+
+      let adSlot1, adSlot2, anchorSlot;
+      const refreshInterval = 30000;
+      let refreshTimer;
+
+      function setupAds() {
+        googletag.cmd.push(function () {
+          const pubads = googletag.pubads();
+          pubads.enableSingleRequest();
+          pubads.setCentering(true);
+
+          if (window.geoTarget) {
+            pubads.setLocation(window.geoTarget);
+          }
+
+          adSlot1 = googletag
+            .defineSlot(
+              "/6355419/Travel/Europe/France/Paris",
+              [
+                [728, 90],
+                [300, 250],
+              ],
+              "ad-slot-1"
+            )
+            .addService(pubads);
+
+          adSlot2 = googletag
+            .defineSlot(
+              "/6355419/Travel/Europe/France/Paris",
+              [
+                [300, 250],
+                [336, 280],
+              ],
+              "ad-slot-2"
+            )
+            .addService(pubads);
+
+          anchorSlot = googletag.defineOutOfPageSlot(
+            "/6355419/Travel/Europe/France/Paris",
+            googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
+          );
+
+          if (anchorSlot) {
+            anchorSlot.addService(pubads);
+            anchorSlot.setElementId("ad-anchor-slot");
+          }
+
+          pubads.addEventListener("slotRenderEnded", function (event) {
+            const slotId = event.slot.getSlotElementId();
+            const isEmpty = event.isEmpty;
+
+            if (isEmpty && document.getElementById(slotId)) {
+              document.getElementById(slotId).style.display = "none";
+            }
+          });
+
+          googletag.enableServices();
+
+          try {
+            if (document.getElementById("ad-slot-1")) {
+              googletag.display("ad-slot-1");
+            }
+            if (document.getElementById("ad-slot-2")) {
+              googletag.display("ad-slot-2");
+            }
+            if (document.getElementById("ad-anchor-slot")) {
+              googletag.display("ad-anchor-slot");
+            }
+          } catch (error) {
+            console.log("Error displaying ads:", error);
+          }
+
+          setupAdRefresh();
+        });
+      }
+
+      function setupAdRefresh() {
+        if (refreshTimer) {
+          clearInterval(refreshTimer);
+        }
+
+        refreshTimer = setInterval(function () {
+          try {
+            const slotsToRefresh = [];
+            if (adSlot1) slotsToRefresh.push(adSlot1);
+            if (adSlot2) slotsToRefresh.push(adSlot2);
+
+            if (slotsToRefresh.length > 0) {
+              googletag.cmd.push(function () {
+                googletag.pubads().refresh(slotsToRefresh);
+              });
+            }
+          } catch (error) {
+            console.log("Error refreshing ads:", error);
+            clearInterval(refreshTimer);
+          }
+        }, refreshInterval);
+      }
+
+      function checkAdBlocker() {
+        const testAd = document.createElement("div");
+        testAd.innerHTML = "&nbsp;";
+        testAd.className = "adsbox";
+        document.body.appendChild(testAd);
+
+        setTimeout(function () {
+          if (testAd.offsetHeight === 0) {
+            console.log("Ad blocker detected");
+          }
+          document.body.removeChild(testAd);
+        }, 100);
+      }
+
+      if (
+        document.readyState === "complete" ||
+        document.readyState === "interactive"
+      ) {
+        setupAds();
+        checkAdBlocker();
+      } else {
+        document.addEventListener("DOMContentLoaded", function () {
+          setupAds();
+          checkAdBlocker();
+        });
+      }
+
+      window.addEventListener("beforeunload", function () {
+        if (refreshTimer) {
+          clearInterval(refreshTimer);
+        }
+      });
+    })();
+  </script>
+</head>
+
+<body class="bg-slate-50 font-sans">
+  <!-- Navbar -->
+  <nav class="bg-coral-600 text-white shadow-lg">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-between items-center py-4">
+        <div class="flex items-center space-x-4">
+          <span class="text-2xl font-bold">FinanceWise</span>
+        </div>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="index.html" class="hover:text-coral-200 transition duration-300">Dashboard</a>
+          <a href="investments.html" class="hover:text-coral-200 transition duration-300">Investments</a>
+          <a href="budget.html" class="hover:text-coral-200 transition duration-300">Budget Planner</a>
+        </div>
+        <div class="md:hidden">
+          <button class="mobile-menu-button">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <!-- Mobile Menu -->
+      <div class="mobile-menu hidden md:hidden bg-coral-700 px-4 py-2">
+        <a href="index.html" class="block py-2 hover:text-coral-200">Dashboard</a>
+        <a href="investments.html" class="block py-2 hover:text-coral-200">Investments</a>
+        <a href="budget.html" class="block py-2 hover:text-coral-200">Budget Planner</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <!-- Page Header -->
+  <header class="relative bg-gradient-to-r from-teal-600 to-coral-500 text-white py-20">
+    <div class="container mx-auto px-4 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-on-scroll">
+        Manage Your Finances Smartly
+      </h1>
+      <p class="text-xl max-w-2xl mx-auto animate-on-scroll" style="animation-delay: 0.2s">
+        Take control of your budgeting, savings, and investments — all in one place.
+      </p>
+    </div>
+  </header>
+
+
+  <!-- Ad Space -->
+  <div class="flex justify-center items-center my-4">
+    <div id="ad-slot-1"
+      class="w-[300px] h-[250px] border border-gray-300 shadow-md rounded-lg bg-white flex items-center justify-center">
+      <span class="text-sm text-gray-400">Advertisement</span>
+    </div>
+  </div>
+
+  <!-- Application Form -->
+  <main class="container mx-auto px-4 py-12">
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden animate-on-scroll">
+      <div class="md:flex">
+        <div class="md:w-1/3 bg-slate-800 text-white p-8">
+          <h2 class="text-2xl font-bold mb-6">Application Progress</h2>
+          <div class="space-y-6">
+            <div class="flex items-center">
+              <div class="w-8 h-8 rounded-full bg-coral-600 flex items-center justify-center mr-4">
+                1
+              </div>
+              <span class="font-medium">Personal Information</span>
+            </div>
+            <div class="flex items-center opacity-50">
+              <div class="w-8 h-8 rounded-full bg-slate-600 flex items-center justify-center mr-4">
+                2
+              </div>
+              <span>Financial Details</span>
+            </div>
+            <div class="flex items-center opacity-50">
+              <div class="w-8 h-8 rounded-full bg-slate-600 flex items-center justify-center mr-4">
+                3
+              </div>
+              <span>Vehicle Information</span>
+            </div>
+            <div class="flex items-center opacity-50">
+              <div class="w-8 h-8 rounded-full bg-slate-600 flex items-center justify-center mr-4">
+                4
+              </div>
+              <span>Review & Submit</span>
+            </div>
+          </div>
+          <div class="mt-12">
+            <h3 class="font-bold mb-4">Need Help?</h3>
+            <p class="text-slate-300 mb-4">
+              Our loan specialists are available to assist you with your
+              application.
+            </p>
+            <button class="text-coral-400 hover:text-coral-300 font-medium">
+              Contact Support
+            </button>
+          </div>
+        </div>
+        <div class="md:w-2/3 p-8">
+          <h2 class="text-2xl font-bold mb-6 text-slate-800">
+            Personal Information
+          </h2>
+          <form class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-slate-700 mb-2">First Name</label>
+                <input type="text"
+                  class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label class="block text-slate-700 mb-2">Last Name</label>
+                <input type="text"
+                  class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-slate-700 mb-2">Email Address</label>
+              <input type="email"
+                class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent" />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-slate-700 mb-2">Phone Number</label>
+                <input type="tel"
+                  class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent" />
+              </div>
+              <div>
+                <label class="block text-slate-700 mb-2">Date of Birth</label>
+                <input type="date"
+                  class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-slate-700 mb-2">Residential Address</label>
+              <input type="text" placeholder="Street Address"
+                class="w-full px-4 py-2 border border-slate-300 rounded-lg mb-2 focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent" />
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <input type="text" placeholder="City"
+                  class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent" />
+                <input type="text" placeholder="State"
+                  class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent" />
+                <input type="text" placeholder="ZIP Code"
+                  class="px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-coral-500 focus:border-transparent" />
+              </div>
+            </div>
+
+            <div class="pt-4">
+              <label class="flex items-center">
+                <input type="checkbox" class="rounded text-coral-600 focus:ring-coral-500" />
+                <span class="ml-2 text-slate-700">I agree to the
+                  <a href="#" class="text-coral-600 hover:underline">Terms of Service</a>
+                  and
+                  <a href="#" class="text-coral-600 hover:underline">Privacy Policy</a></span>
+              </label>
+            </div>
+
+            <div class="flex justify-end pt-6">
+              <button
+                class="bg-coral-600 hover:bg-coral-700 text-white px-8 py-3 rounded-full font-bold transition duration-300 transform hover:scale-105">
+                Next: Financial Details
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Ad Space -->
+  <div class="flex justify-center items-center my-4">
+    <div id="ad-slot-2"
+      class="w-[300px] h-[250px] border border-gray-300 shadow-md rounded-lg bg-white flex items-center justify-center">
+      <span class="text-sm text-gray-400">Advertisement</span>
+    </div>
+  </div>
+
+  <!-- Loan Options -->
+  <section class="py-16 bg-gradient-to-br from-slate-100 to-slate-200">
+    <div class="container mx-auto px-4">
+      <h2 class="text-3xl font-bold text-center mb-16 text-slate-800">
+        Our Loan Options
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-500 animate-on-scroll">
+          <div class="bg-teal-600 text-white p-6 text-center">
+            <h3 class="text-xl font-bold">Standard Auto Loan</h3>
+            <p class="mt-2">For borrowers with good credit</p>
+          </div>
+          <div class="p-6">
+            <div class="text-center mb-6">
+              <span class="text-4xl font-bold text-slate-800">5.49%</span>
+              <span class="text-slate-600">APR*</span>
+            </div>
+            <ul class="space-y-3 text-slate-700">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-teal-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Terms from 24 to 72 months</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-teal-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Loan amounts up to $100,000</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-teal-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>No prepayment penalties</span>
+              </li>
+            </ul>
+            <div class="mt-8 text-center">
+              <button
+                class="border-2 border-teal-600 text-teal-600 hover:bg-teal-600 hover:text-white px-6 py-2 rounded-full font-medium transition duration-300">
+                Learn More
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-500 animate-on-scroll"
+          style="animation-delay: 0.2s">
+          <div class="bg-coral-600 text-white p-6 text-center">
+            <h3 class="text-xl font-bold">Prime Auto Loan</h3>
+            <p class="mt-2">For borrowers with excellent credit</p>
+          </div>
+          <div class="p-6">
+            <div class="text-center mb-6">
+              <span class="text-4xl font-bold text-slate-800">3.99%</span>
+              <span class="text-slate-600">APR*</span>
+            </div>
+            <ul class="space-y-3 text-slate-700">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-coral-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Terms from 24 to 84 months</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-coral-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Loan amounts up to $150,000</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-coral-600 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Rate discounts available</span>
+              </li>
+            </ul>
+            <div class="mt-8 text-center">
+              <button
+                class="border-2 border-coral-600 text-coral-600 hover:bg-coral-600 hover:text-white px-6 py-2 rounded-full font-medium transition duration-300">
+                Learn More
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition duration-500 animate-on-scroll"
+          style="animation-delay: 0.4s">
+          <div class="bg-slate-700 text-white p-6 text-center">
+            <h3 class="text-xl font-bold">Rebuilding Credit Loan</h3>
+            <p class="mt-2">For borrowers rebuilding credit</p>
+          </div>
+          <div class="p-6">
+            <div class="text-center mb-6">
+              <span class="text-4xl font-bold text-slate-800">9.99%</span>
+              <span class="text-slate-600">APR*</span>
+            </div>
+            <ul class="space-y-3 text-slate-700">
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-slate-700 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Terms from 24 to 60 months</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-slate-700 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Loan amounts up to $35,000</span>
+              </li>
+              <li class="flex items-start">
+                <svg class="w-5 h-5 text-slate-700 mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                <span>Credit rebuilding reports</span>
+              </li>
+            </ul>
+            <div class="mt-8 text-center">
+              <button
+                class="border-2 border-slate-700 text-slate-700 hover:bg-slate-700 hover:text-white px-6 py-2 rounded-full font-medium transition duration-300">
+                Learn More
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-8 text-slate-600">
+        <p>
+          *APR = Annual Percentage Rate. Rates shown are for illustrative
+          purposes only. Your actual rate may vary.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-16 bg-slate-800 text-white">
+    <div class="container mx-auto px-4 text-center animate-on-scroll">
+      <h2 class="text-3xl font-bold mb-6">Ready to Get Started?</h2>
+      <p class="text-xl mb-8 max-w-2xl mx-auto">
+        Our simple application takes just minutes to complete with no
+        obligation.
+      </p>
+      <a href="apply.html"
+        class="inline-block bg-coral-600 hover:bg-coral-700 text-white px-8 py-3 rounded-full font-bold transition duration-300 transform hover:scale-105">
+        Begin Application
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-800 text-white py-12">
+    <div class="container mx-auto px-4">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="col-span-1">
+          <h3 class="text-xl font-bold mb-4">AutoLoan Pro</h3>
+          <p class="text-slate-300">
+            Your trusted partner for vehicle financing solutions since 2010.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li>
+              <a href="index.html" class="text-slate-300 hover:text-white">Home</a>
+            </li>
+            <li>
+              <a href="about.html" class="text-slate-300 hover:text-white">About Loans</a>
+            </li>
+            <li>
+              <a href="apply.html" class="text-slate-300 hover:text-white">Apply Now</a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">Services</h4>
+          <ul class="space-y-2">
+            <li class="text-slate-300">Car Loans</li>
+            <li class="text-slate-300">Truck Financing</li>
+            <li class="text-slate-300">Motorcycle Loans</li>
+            <li class="text-slate-300">Refinancing</li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-4">Legal</h4>
+          <ul class="space-y-2">
+            <li class="text-slate-300">Privacy Policy</li>
+            <li class="text-slate-300">Terms of Service</li>
+            <li class="text-slate-300">Licenses</li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-slate-700 mt-8 pt-8 text-center text-slate-400">
+        <p>© 2023 AutoLoan Pro. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+  <script>
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+      alert("Right-click is disabled to protect our content.");
+    });
+
+    document.onkeydown = function (e) {
+      if (
+        (e.ctrlKey &&
+          (e.key === "u" ||
+            e.key === "s" ||
+            e.key === "c" ||
+            e.key === "i" ||
+            e.key === "j")) ||
+        e.key === "F12" ||
+        (e.metaKey && e.altKey && e.key === "i")
+      ) {
+        e.preventDefault();
+        alert(
+          "Access to developer tools and source code is disabled to protect our content."
+        );
+        return false;
+      }
+      return true;
+    };
+
+    document.addEventListener("selectstart", function (e) {
+      e.preventDefault();
+    });
+
+    document.addEventListener("dragstart", function (e) {
+      e.preventDefault();
+    });
+  </script>
+  <script>
+    window.googletag = window.googletag || { cmd: [] };
+    var anchorSlot;
+    googletag.cmd.push(function () {
+      anchorSlot = googletag.defineOutOfPageSlot(
+        "/6355419/Travel/Europe/France/Paris",
+        googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
+      );
+      if (anchorSlot) {
+        anchorSlot.addService(googletag.pubads());
+      }
+      googletag.pubads().enableSingleRequest();
+      googletag.enableServices();
+    });
+  </script>
+  <script>
+    // Mobile menu toggle
+    const btn = document.querySelector(".mobile-menu-button");
+    const menu = document.querySelector(".mobile-menu");
+
+    btn.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+    });
+
+    // Animation on scroll
+    const observerOptions = {
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add(
+            "animate__animated",
+            "animate__fadeInUp"
+          );
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll(".animate-on-scroll").forEach((element) => {
+      observer.observe(element);
+    });
+  </script>
+</body>
+
+</html>

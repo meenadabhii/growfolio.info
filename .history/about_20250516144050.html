@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>growfolio.info</title>
+    <link href="./output.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <script
+      async
+      src="https://securepubads.g.doubleclick.net/tag/js/gpt.js"
+    ></script>
+    <script>
+      (function () {
+        window.googletag = window.googletag || { cmd: [] };
+
+        let adSlot1, adSlot2, anchorSlot;
+        const refreshInterval = 30000;
+        let refreshTimer;
+
+        function setupAds() {
+          googletag.cmd.push(function () {
+            const pubads = googletag.pubads();
+            pubads.enableSingleRequest();
+            pubads.setCentering(true);
+
+            if (window.geoTarget) {
+              pubads.setLocation(window.geoTarget);
+            }
+
+            adSlot1 = googletag
+              .defineSlot(
+                "/6355419/Travel/Europe/France/Paris",
+                [
+                  [728, 90],
+                  [300, 250],
+                ],
+                "ad-slot-1"
+              )
+              .addService(pubads);
+
+            adSlot2 = googletag
+              .defineSlot(
+                "/6355419/Travel/Europe/France/Paris",
+                [
+                  [300, 250],
+                  [336, 280],
+                ],
+                "ad-slot-2"
+              )
+              .addService(pubads);
+
+            anchorSlot = googletag.defineOutOfPageSlot(
+              "/6355419/Travel/Europe/France/Paris",
+              googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
+            );
+
+            if (anchorSlot) {
+              anchorSlot.addService(pubads);
+              anchorSlot.setElementId("ad-anchor-slot");
+            }
+
+            pubads.addEventListener("slotRenderEnded", function (event) {
+              const slotId = event.slot.getSlotElementId();
+              const isEmpty = event.isEmpty;
+
+              if (isEmpty && document.getElementById(slotId)) {
+                document.getElementById(slotId).style.display = "none";
+              }
+            });
+
+            googletag.enableServices();
+
+            try {
+              if (document.getElementById("ad-slot-1")) {
+                googletag.display("ad-slot-1");
+              }
+              if (document.getElementById("ad-slot-2")) {
+                googletag.display("ad-slot-2");
+              }
+              if (document.getElementById("ad-anchor-slot")) {
+                googletag.display("ad-anchor-slot");
+              }
+            } catch (error) {
+              console.log("Error displaying ads:", error);
+            }
+
+            setupAdRefresh();
+          });
+        }
+
+        function setupAdRefresh() {
+          if (refreshTimer) {
+            clearInterval(refreshTimer);
+          }
+
+          refreshTimer = setInterval(function () {
+            try {
+              const slotsToRefresh = [];
+              if (adSlot1) slotsToRefresh.push(adSlot1);
+              if (adSlot2) slotsToRefresh.push(adSlot2);
+
+              if (slotsToRefresh.length > 0) {
+                googletag.cmd.push(function () {
+                  googletag.pubads().refresh(slotsToRefresh);
+                });
+              }
+            } catch (error) {
+              console.log("Error refreshing ads:", error);
+              clearInterval(refreshTimer);
+            }
+          }, refreshInterval);
+        }
+
+        function checkAdBlocker() {
+          const testAd = document.createElement("div");
+          testAd.innerHTML = "&nbsp;";
+          testAd.className = "adsbox";
+          document.body.appendChild(testAd);
+
+          setTimeout(function () {
+            if (testAd.offsetHeight === 0) {
+              console.log("Ad blocker detected");
+            }
+            document.body.removeChild(testAd);
+          }, 100);
+        }
+
+        if (
+          document.readyState === "complete" ||
+          document.readyState === "interactive"
+        ) {
+          setupAds();
+          checkAdBlocker();
+        } else {
+          document.addEventListener("DOMContentLoaded", function () {
+            setupAds();
+            checkAdBlocker();
+          });
+        }
+
+        window.addEventListener("beforeunload", function () {
+          if (refreshTimer) {
+            clearInterval(refreshTimer);
+          }
+        });
+      })();
+    </script>
+  </head>
+  <body class="bg-slate-50 font-sans">
+    <!-- Navbar -->
+    <nav class="bg-coral-600 text-white shadow-lg">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+          <div class="flex items-center space-x-4">
+            <span class="text-2xl font-bold">AutoLoan Pro</span>
+          </div>
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="index.html"
+              class="hover:text-coral-200 transition duration-300"
+              >Home</a
+            >
+            <a
+              href="about.html"
+              class="hover:text-coral-200 transition duration-300"
+              >About Loans</a
+            >
+            <a
+              href="apply.html"
+              class="hover:text-coral-200 transition duration-300"
+              >Apply Now</a
+            >
+          </div>
+          <div class="md:hidden">
+            <button class="mobile-menu-button">
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu hidden md:hidden bg-coral-700 px-4 py-2">
+          <a href="index.html" class="block py-2 hover:text-coral-200">Home</a>
+          <a href="about.html" class="block py-2 hover:text-coral-200"
+            >About Loans</a
+          >
+          <a href="apply.html" class="block py-2 hover:text-coral-200"
+            >Apply Now</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header
+      class="bg-gradient-to-r from-coral-500 to-teal-600 text-white py-20"
+    >
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 animate-on-scroll">
+          About Vehicle Loans
+        </h1>
+        <p
+          class="text-xl max-w-2xl mx-auto animate-on-scroll"
+          style="animation-delay: 0.2s"
+        >
+          Everything you need to know about financing your next vehicle
+          purchase.
+        </p>
+      </div>
+    </header>
+
+    <!-- Ad Space -->
+    <div class="flex justify-center items-center my-4">
+      <div
+        id="ad-slot-1"
+        class="w-[300px] h-[250px] border border-gray-300 shadow-md rounded-lg bg-white flex items-center justify-center"
+      >
+        <span class="text-sm text-gray-400">Advertisement</span>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+      <div class="max-w-4xl mx-auto">
+        <section class="mb-16 animate-on-scroll">
+          <h2 class="text-3xl font-bold mb-6 text-slate-800">
+            Understanding Vehicle Loans
+          </h2>
+          <div class="prose max-w-none text-slate-700">
+            <p>
+              Vehicle loans, also known as auto loans or car financing, are
+              specialized loans designed to help individuals purchase vehicles
+              while spreading the cost over time. These loans typically have
+              fixed interest rates and repayment terms ranging from 12 to 84
+              months.
+            </p>
+
+            <p>
+              When you take out a vehicle loan, the lender provides you with the
+              funds to purchase the car, and you agree to repay the loan amount
+              plus interest over the agreed term. The vehicle itself serves as
+              collateral for the loan, which means the lender can repossess it
+              if you fail to make payments.
+            </p>
+
+            <h3 class="text-xl font-bold mt-8 mb-4 text-slate-800">
+              Types of Vehicle Loans
+            </h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>
+                <strong>New Car Loans:</strong> Specifically for brand new
+                vehicles, often with lower interest rates
+              </li>
+              <li>
+                <strong>Used Car Loans:</strong> For pre-owned vehicles,
+                typically with slightly higher rates
+              </li>
+              <li>
+                <strong>Refinance Loans:</strong> Replace your existing auto
+                loan with better terms
+              </li>
+              <li>
+                <strong>Lease Buyout Loans:</strong> Purchase your leased
+                vehicle at the end of the lease term
+              </li>
+              <li>
+                <strong>Private Party Loans:</strong> Finance a vehicle
+                purchased directly from an individual
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Ad Space -->
+        <div class="flex justify-center items-center my-4">
+          <div
+            id="ad-slot-2"
+            class="w-[300px] h-[250px] border border-gray-300 shadow-md rounded-lg bg-white flex items-center justify-center"
+          >
+            <span class="text-sm text-gray-400">Advertisement</span>
+          </div>
+        </div>
+
+        <section class="mb-16 animate-on-scroll" style="animation-delay: 0.2s">
+          <h2 class="text-3xl font-bold mb-6 text-slate-800">
+            Loan Terms Explained
+          </h2>
+          <div class="bg-slate-50 rounded-xl shadow-md overflow-hidden">
+            <div
+              class="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-slate-200"
+            >
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-4 text-coral-600">
+                  Loan Amount
+                </h3>
+                <p class="text-slate-700">
+                  This is the total amount you're borrowing to purchase the
+                  vehicle. It typically includes the purchase price minus any
+                  down payment, plus taxes and fees in some cases.
+                </p>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-4 text-coral-600">
+                  Interest Rate
+                </h3>
+                <p class="text-slate-700">
+                  The percentage of the loan amount you'll pay as interest.
+                  Rates can be fixed (stays the same) or variable (changes with
+                  market conditions).
+                </p>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-4 text-coral-600">Loan Term</h3>
+                <p class="text-slate-700">
+                  The length of time you have to repay the loan, usually
+                  expressed in months (e.g., 36, 48, 60 months). Longer terms
+                  mean lower payments but more interest paid overall.
+                </p>
+              </div>
+              <div class="p-6">
+                <h3 class="text-xl font-bold mb-4 text-coral-600">
+                  APR (Annual Percentage Rate)
+                </h3>
+                <p class="text-slate-700">
+                  The total cost of borrowing, including interest and fees,
+                  expressed as a yearly percentage. This helps compare different
+                  loan offers.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="mb-16 animate-on-scroll" style="animation-delay: 0.4s">
+          <h2 class="text-3xl font-bold mb-6 text-slate-800">
+            Frequently Asked Questions
+          </h2>
+          <div class="space-y-4">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <button
+                class="faq-toggle w-full flex justify-between items-center text-left"
+              >
+                <h3 class="text-lg font-bold text-slate-800">
+                  What credit score do I need for a vehicle loan?
+                </h3>
+                <svg
+                  class="w-6 h-6 text-coral-600 faq-icon transform transition-transform duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </button>
+              <div class="faq-content hidden mt-4 text-slate-700">
+                <p>Credit requirements vary by lender, but generally:</p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Excellent credit: 720+ (best rates)</li>
+                  <li>Good credit: 660-719</li>
+                  <li>Fair credit: 620-659</li>
+                  <li>
+                    Poor credit: Below 620 (higher rates or may need cosigner)
+                  </li>
+                </ul>
+                <p class="mt-2">
+                  Some lenders specialize in loans for borrowers with
+                  less-than-perfect credit.
+                </p>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <button
+                class="faq-toggle w-full flex justify-between items-center text-left"
+              >
+                <h3 class="text-lg font-bold text-slate-800">
+                  How much down payment is required?
+                </h3>
+                <svg
+                  class="w-6 h-6 text-coral-600 faq-icon transform transition-transform duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </button>
+              <div class="faq-content hidden mt-4 text-slate-700">
+                <p>
+                  Down payment requirements vary but typically range from 10% to
+                  20% of the vehicle's purchase price. Some situations may
+                  require more:
+                </p>
+                <ul class="list-disc pl-6 mt-2 space-y-1">
+                  <li>Used vehicles often require larger down payments</li>
+                  <li>
+                    Borrowers with lower credit scores may need to put down more
+                  </li>
+                  <li>
+                    Some special offers allow for $0 down (but this increases
+                    your loan amount)
+                  </li>
+                </ul>
+                <p class="mt-2">
+                  A larger down payment reduces your loan amount and monthly
+                  payments.
+                </p>
+              </div>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow-md">
+              <button
+                class="faq-toggle w-full flex justify-between items-center text-left"
+              >
+                <h3 class="text-lg font-bold text-slate-800">
+                  What's the difference between dealer financing and direct
+                  lending?
+                </h3>
+                <svg
+                  class="w-6 h-6 text-coral-600 faq-icon transform transition-transform duration-300"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M19 9l-7 7-7-7"
+                  ></path>
+                </svg>
+              </button>
+              <div class="faq-content hidden mt-4 text-slate-700">
+                <p>
+                  <strong>Dealer financing:</strong> Arranged through the car
+                  dealership. The dealer works with multiple lenders to find you
+                  a loan. Convenient but may include markup on the interest
+                  rate.
+                </p>
+                <p class="mt-2">
+                  <strong>Direct lending:</strong> You secure financing directly
+                  from a bank, credit union, or online lender before visiting
+                  the dealership. Gives you more control and allows you to
+                  compare rates.
+                </p>
+                <p class="mt-2">
+                  It's often wise to get pre-approved through a direct lender
+                  before visiting dealerships to have a baseline for comparison.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <section class="animate-on-scroll" style="animation-delay: 0.6s">
+          <h2 class="text-3xl font-bold mb-6 text-slate-800">
+            Tips for Getting the Best Loan
+          </h2>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div
+              class="bg-white p-6 rounded-lg shadow-md border-l-4 border-coral-600"
+            >
+              <h3 class="text-xl font-bold mb-4 text-slate-800">
+                Check Your Credit First
+              </h3>
+              <p class="text-slate-700">
+                Review your credit reports for errors and know your score before
+                applying. This helps you understand what rates you might qualify
+                for.
+              </p>
+            </div>
+            <div
+              class="bg-white p-6 rounded-lg shadow-md border-l-4 border-teal-600"
+            >
+              <h3 class="text-xl font-bold mb-4 text-slate-800">Shop Around</h3>
+              <p class="text-slate-700">
+                Compare offers from multiple lenders (banks, credit unions,
+                online lenders) to find the best rate and terms for your
+                situation.
+              </p>
+            </div>
+            <div
+              class="bg-white p-6 rounded-lg shadow-md border-l-4 border-amber-500"
+            >
+              <h3 class="text-xl font-bold mb-4 text-slate-800">
+                Consider Shorter Terms
+              </h3>
+              <p class="text-slate-700">
+                While longer terms mean lower payments, you'll pay more interest
+                overall. Choose the shortest term you can comfortably afford.
+              </p>
+            </div>
+            <div
+              class="bg-white p-6 rounded-lg shadow-md border-l-4 border-slate-600"
+            >
+              <h3 class="text-xl font-bold mb-4 text-slate-800">
+                Negotiate the Price First
+              </h3>
+              <p class="text-slate-700">
+                Focus on getting the best vehicle price before discussing
+                financing. This gives you more leverage in negotiations.
+              </p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-coral-600 text-white">
+      <div class="container mx-auto px-4 text-center animate-on-scroll">
+        <h2 class="text-3xl font-bold mb-6">Have More Questions?</h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+          Our loan specialists are ready to help you understand all your vehicle
+          financing options.
+        </p>
+        <a
+          href="apply.html"
+          class="inline-block bg-white text-coral-600 hover:bg-slate-100 px-8 py-3 rounded-full font-bold transition duration-300 transform hover:scale-105"
+        >
+          Contact Our Team
+        </a>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-800 text-white py-12">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div class="col-span-1">
+            <h3 class="text-xl font-bold mb-4">AutoLoan Pro</h3>
+            <p class="text-slate-300">
+              Your trusted partner for vehicle financing solutions since 2010.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Quick Links</h4>
+            <ul class="space-y-2">
+              <li>
+                <a href="index.html" class="text-slate-300 hover:text-white"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a href="about.html" class="text-slate-300 hover:text-white"
+                  >About Loans</a
+                >
+              </li>
+              <li>
+                <a href="apply.html" class="text-slate-300 hover:text-white"
+                  >Apply Now</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Services</h4>
+            <ul class="space-y-2">
+              <li class="text-slate-300">Car Loans</li>
+              <li class="text-slate-300">Truck Financing</li>
+              <li class="text-slate-300">Motorcycle Loans</li>
+              <li class="text-slate-300">Refinancing</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-bold mb-4">Legal</h4>
+            <ul class="space-y-2">
+              <li class="text-slate-300">Privacy Policy</li>
+              <li class="text-slate-300">Terms of Service</li>
+              <li class="text-slate-300">Licenses</li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="border-t border-slate-700 mt-8 pt-8 text-center text-slate-400"
+        >
+          <p>© 2023 AutoLoan Pro. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+    <script>
+      // Same JavaScript as in base.html plus FAQ toggle
+      document.querySelectorAll(".faq-toggle").forEach((button) => {
+        button.addEventListener("click", () => {
+          const content = button.nextElementSibling;
+          const icon = button.querySelector(".faq-icon");
+
+          content.classList.toggle("hidden");
+          icon.classList.toggle("rotate-180");
+        });
+      });
+    </script>
+    <script>
+      document.addEventListener("contextmenu", function (e) {
+        e.preventDefault();
+        alert("Right-click is disabled to protect our content.");
+      });
+
+      document.onkeydown = function (e) {
+        if (
+          (e.ctrlKey &&
+            (e.key === "u" ||
+              e.key === "s" ||
+              e.key === "c" ||
+              e.key === "i" ||
+              e.key === "j")) ||
+          e.key === "F12" ||
+          (e.metaKey && e.altKey && e.key === "i")
+        ) {
+          e.preventDefault();
+          alert(
+            "Access to developer tools and source code is disabled to protect our content."
+          );
+          return false;
+        }
+        return true;
+      };
+
+      document.addEventListener("selectstart", function (e) {
+        e.preventDefault();
+      });
+
+      document.addEventListener("dragstart", function (e) {
+        e.preventDefault();
+      });
+    </script>
+    <script>
+      window.googletag = window.googletag || { cmd: [] };
+      var anchorSlot;
+      googletag.cmd.push(function () {
+        anchorSlot = googletag.defineOutOfPageSlot(
+          "/6355419/Travel/Europe/France/Paris",
+          googletag.enums.OutOfPageFormat.BOTTOM_ANCHOR
+        );
+        if (anchorSlot) {
+          anchorSlot.addService(googletag.pubads());
+        }
+        googletag.pubads().enableSingleRequest();
+        googletag.enableServices();
+      });
+    </script>
+    <script>
+      // Mobile menu toggle
+      const btn = document.querySelector(".mobile-menu-button");
+      const menu = document.querySelector(".mobile-menu");
+
+      btn.addEventListener("click", () => {
+        menu.classList.toggle("hidden");
+      });
+
+      // Animation on scroll
+      const observerOptions = {
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(
+              "animate__animated",
+              "animate__fadeInUp"
+            );
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".animate-on-scroll").forEach((element) => {
+        observer.observe(element);
+      });
+    </script>
+  </body>
+</html>
